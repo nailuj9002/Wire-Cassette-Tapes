@@ -51,7 +51,7 @@ function ENT:RewindTape()
 end
 
 function ENT:AccessTape()
-	return self.Storage[self.CurrentSector] or "This would be an empty string but I return this for a test"
+	return self.Storage[self.CurrentSector] or ""
 end
 
 function ENT:ModifyTape(newSector)
