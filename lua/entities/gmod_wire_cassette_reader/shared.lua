@@ -43,6 +43,7 @@ function ENT:WriteCell(address, value)
 end
 
 function ENT:TriggerInput(iname, value)
+	if value == 0 then return end
 	if not IsValid(self.Cassette) or self.Cassette:GetClass() ~= "gmod_wire_cassette_tape" then
 		self.Buffer = {}
 		return
@@ -69,9 +70,7 @@ function ENT:TriggerInput(iname, value)
 	elseif iname == "Rewind" then
 		self.Cassette:RewindTape()
 	elseif iname == "Eject" then
-		if value ~= 0 then
-			self:Use(self)
-		end
+		self:Use(self)
 	end
 end
 
