@@ -5,7 +5,7 @@ if CLIENT then
 	language.Add("Tool.wire_cassette_reader.name", "Cassette Reader Tool (Wire)")
 	language.Add("Tool.wire_cassette_reader.desc", "Spawns a Cassette Reader.")
 	language.Add("WireCDRayTool_cd_ray", "Cassette Reader:")
-	language.Add("sboxlimit_wire_cassette_readers", "You've hit Cassette Readers limit!")
+	language.Add("sboxlimit_wire_cassette_readers", "You've hit the Cassette Reader limit!")
 	TOOL.Information = {
 		{ name = "left", text = "Create/Update " .. TOOL.Name },
 	}
