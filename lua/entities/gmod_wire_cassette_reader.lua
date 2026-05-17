@@ -3,6 +3,8 @@ DEFINE_BASECLASS("base_wire_entity")
 ENT.PrintName = "Wire Cassette Reader"
 ENT.WantsTranslucency = true
 ENT.WireDebugName = "Cassette Ray"
+ENT.Spawnable = true
+ENT.Category	= "RAM-Cards (Wire)"
 
 if CLIENT then
 	return
@@ -22,24 +24,41 @@ function ENT:Initialize()
 
 	self.Buffer = {}
 	self.Cassette = nil
-	self.Connection = nil
+
+	self.Command = {}
+	self.Command[6] = function()
+		if IsValid(self.Cassette) then
+			self.Cassette:SetParent(nil)
+			self.Cassette:SetPos(self:LocalToWorld(Vector(0,0,10)))
+			self.Cassette:GetPhysicsObject():EnableMotion(false)
+			self.Cassette = nil
+			self:EmitSound("47ak.magout")
+		end
+	end
 end
 
 function ENT:ReadCell(address)
-	if not (address >= 1 or address <= WIRE_CASETTE_CHUNK_SIZE) then
+	if not (address >= 0 or address <= WIRE_CASETTE_CHUNK_SIZE+32) then
 		return
 	end
-	return self.Buffer[address] or 0
+	if address == 4 then
+		return self.Command[4]()
+	end
+	return self.Buffer[address-32] or 0
 end
 
 function ENT:WriteCell(address, value)
-	if not (address >= 1 or address <= WIRE_CASETTE_CHUNK_SIZE) then
+	if not (address >= 0 or address <= WIRE_CASETTE_CHUNK_SIZE+32) then
 		return
 	end
 	if not isnumber(value) then
 		return
 	end
-	self.Buffer[address] = value
+	if IsValid(self.Cassette) and address >= 0 and address <= 32 then
+		self.Command[address]()
+	else
+		self.Buffer[address-32] = value
+	end
 end
 
 function ENT:TriggerInput(iname, value)
@@ -82,6 +101,22 @@ function ENT:PhysicsCollide(colData, collider)
 		self.Cassette:SetParent(self)
 		self.Cassette:GetPhysicsObject():EnableMotion(false)
 		self:EmitSound("47ak.magin")
+
+		self.Command[0] = function()
+			self.Buffer = {}
+			local source = self.Cassette:AccessTape()
+			for i = 1, WIRE_CASETTE_CHUNK_SIZE do
+				if i <= #source then
+					self.Buffer[i] = string.byte(source[i])
+				else
+					break
+				end
+			end
+		end
+		self.Command[1] = function() self.Cassette:ModifyTape(string.char(unpack(self.Buffer))) end
+		self.Command[2] = function() self.Cassette:AdvanceTape() end
+		self.Command[3] = function() self.Cassette:RewindTape() end
+		self.Command[4] = function() self.Cassette:TapePosition() end
 	end
 end
 
@@ -97,13 +132,7 @@ function ENT:Think()
 end
 
 function ENT:Use()
-	if IsValid(self.Cassette) then
-		self.Cassette:SetParent(nil)
-		self.Cassette:SetPos(self:LocalToWorld(Vector(0,0,10)))
-		self.Cassette:GetPhysicsObject():EnableMotion(false)
-		self.Cassette = nil
-		self:EmitSound("47ak.magout")
-	end
+	self.Command[6]()
 end
 
 duplicator.RegisterEntityClass("gmod_wire_cassette_reader", WireLib.MakeWireEnt, "Data")

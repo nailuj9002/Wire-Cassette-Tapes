@@ -1,10 +1,10 @@
 WireToolSetup.setCategory("Memory")
-WireToolSetup.open("cassette_tape", "Cassette Tape", "gmod_wire_cassette_tape", nil, "Cassette Tapes")
+WireToolSetup.open("cassette_tape", "Cassette Tape", "gmod_wire_cassette_tape", nil, "Cassette Tape")
 
 if CLIENT then
 	language.Add("Tool.wire_cassette_tape.name", "Cassette Tape Tool (Wire)")
 	language.Add("Tool.wire_cassette_tape.desc", "Spawns a Cassette Tape.")
-	language.Add("sboxlimit_wire_cassette_tapes", "You've hit Cassette Tapes limit!")
+	language.Add("sboxlimit_wire_cassette_tapes", "You've hit the Cassette Tape limit!")
 	TOOL.Information = {
 		{ name = "left", text = "Create/Update " .. TOOL.Name },
 	}

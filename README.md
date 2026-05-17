@@ -16,3 +16,7 @@ Wire Cassette Reader has Wire inputs to Read, Write, Advance and Rewind the tape
 # Shameless Plug
 This addon has been created for my spacebuild* server **Space Sandbox Server**. Feel free to join our Discord for collection and IP.<br>
 https://discord.com/invite/QgWpfpw9F6
+# Credits
+Cassette model is this: https://sketchfab.com/3d-models/cassette-tapes-820777808625494581401700ccc3e7f7
+Cassette reader model is this: https://sketchfab.com/3d-models/cassette-player-57f556902cf940699103696f1d95a19b
+Interestingly enough, it appears that these links are actually reposts of the original model that seems to has been removed since. If you're the original author of these models please reach out to me on our discord.
