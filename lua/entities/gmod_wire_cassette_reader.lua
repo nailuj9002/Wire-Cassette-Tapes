@@ -3,8 +3,6 @@ DEFINE_BASECLASS("base_wire_entity")
 ENT.PrintName = "Wire Cassette Reader"
 ENT.WantsTranslucency = true
 ENT.WireDebugName = "Cassette Ray"
-ENT.Spawnable = true
-ENT.Category	= "RAM-Cards (Wire)"
 
 if CLIENT then
 	return

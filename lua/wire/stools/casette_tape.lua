@@ -24,6 +24,6 @@ end
 
 function TOOL.BuildCPanel(panel) 
 	panel:Help("A Cassette Tape to insert into a Cassette Reader.")
-	panel:Help("It stores a table of 3840 strings (\"sectors\") 4 KB each, first sector is #1")
-	panel:Help("Total capacity: 15 MB")
+	panel:Help("It stores a table of "..math.truncate((WIRE_CASETTE_TOTAL_CAPACITY/WIRE_CASETTE_CHUNK_SIZE)).." strings (\"sectors\") "..math.truncate((WIRE_CASETTE_CHUNK_SIZE/1024)).." KB each, first sector is #1")
+	panel:Help("Total capacity: "..math.truncate((WIRE_CASETTE_TOTAL_CAPACITY/1024/1024),1).." MB")
 end
